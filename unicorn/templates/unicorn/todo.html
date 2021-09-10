@@ -1,0 +1,75 @@
+<div class="columns">
+  <div class="column is-half">
+    <!-- add todo -->
+    <div class="field">
+      <label class="label">Add Task</label>
+      <div class="field is-grouped">
+        <div class="control">
+          <input
+            class="input"
+            type="text"
+            placeholder="Search high and low"
+            unicorn:model.defer="task"
+          />
+        </div>
+        <div class="control">
+            <button class="button is-link" unicorn:click="add_todo">Add</button>
+          </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="field is-grouped">
+        <div class="control">
+          <input
+            class="input"
+            type="text"
+            placeholder="Filter"
+            unicorn:model.defer="filter"
+          />
+        </div>
+        <div class="control">
+            <button class="button is-link" unicorn:click="filter_tasks">Filter</button>
+          </div>
+      </div>
+    </div>
+
+    <div class="field is-grouped">
+      <div class="control">
+        <button class="button is-link" unicorn:click="order_tasks">Order</button>
+      </div>
+      <div class="control">
+        <button class="button is-link" unicorn:click="hydrate">Un-Order</button>
+      </div>
+      <div class="control">
+        <button class="button is-link is-light" unicorn:click="increment(5)">
+          Increment {{ num }}
+        </button>
+      </div>
+      <div class="control">
+        <button class="button is-link" unicorn:click="populate_random_tasks(100)">Populate</button>
+      </div>
+    </div>
+    <p class="pb-1">
+      <strong>Current Tasks</strong>
+    </p>
+    {% if not todos %}
+    <p>None, yet!</p>
+    {% else %}
+
+      {% for todo in todos %}
+      <div style="display:flex">
+        <div id="{{ todo.id }}" class="box is-full" style="margin-right:10px;width:100%;">
+          {{ todo.task }}
+        </div>
+        <button style="margin-top:14px" class="button is-danger" unicorn:click="delete_task({{ todo.id }})">Delete</button>
+      </div>
+      {% endfor %}
+
+    {% endif %}
+    <div style="height: 20px">
+      <span unicorn:visible="load_more_tasks"></span>
+    </div>
+  </div>
+  <!-- end add todo -->
+</div>
